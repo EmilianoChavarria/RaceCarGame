@@ -9,13 +9,13 @@ public class WheelAnimator : MonoBehaviour
     public Transform wheelBackRight;
     
     [Header("Configuración")]
-    public float wheelRadius = 0.35f; // Radio de la rueda
-    public float maxSteerAngle = 30f; // Ángulo máximo de dirección
-    public float steerSpeed = 5f; // Velocidad de transición de dirección (más realista)
+    public float wheelRadius = 0.35f;
+    public float maxSteerAngle = 30f; 
+    public float steerSpeed = 5f; 
     
     private CarController carController;
     private float wheelRotation = 0f;
-    private float currentSteerAngle = 0f; // Para suavizar el giro
+    private float currentSteerAngle = 0f; 
     
     private bool isInitialized = false;
 
@@ -31,7 +31,6 @@ public class WheelAnimator : MonoBehaviour
         
         isInitialized = true;
         
-        // Log para verificar las ruedas
         if (wheelFrontLeft != null) Debug.Log("✓ Rueda FL encontrada");
         if (wheelFrontRight != null) Debug.Log("✓ Rueda FR encontrada");
         if (wheelBackLeft != null) Debug.Log("✓ Rueda BL encontrada");
@@ -50,29 +49,20 @@ public class WheelAnimator : MonoBehaviour
         float speed = carController.GetSpeed();
         float horizontalInput = Input.GetAxis("Horizontal");
 
-        // 1. CALCULAR ROTACIÓN DE RUEDAS (giro hacia adelante/atrás)
         float wheelRPM = (speed / (2 * Mathf.PI * wheelRadius)) * 360f * Time.deltaTime;
         wheelRotation += wheelRPM;
         
-        // Mantener el ángulo en rango razonable
         wheelRotation = wheelRotation % 360f;
         
-        // 2. CALCULAR ÁNGULO DE DIRECCIÓN - SUAVIZADO
         float targetSteerAngle = horizontalInput * maxSteerAngle;
         currentSteerAngle = Mathf.Lerp(currentSteerAngle, targetSteerAngle, Time.deltaTime * steerSpeed);
         
-        // 3. APLICAR ROTACIONES DE FORMA SEPARADA
-        // Usamos quaterniones multiplicados en el orden correcto
         
-        // RUEDAS DELANTERAS (con dirección)
         if (wheelFrontLeft != null)
         {
-            // Primero: Dirección en Z (volante)
-            // Segundo: Giro en X (rueda rodando)
             Quaternion steerRotation = Quaternion.Euler(0, 0, currentSteerAngle);
             Quaternion wheelRoll = Quaternion.Euler(wheelRotation, 0, 0);
             
-            // Aplicar en orden: primero dirección, luego giro
             wheelFrontLeft.localRotation = steerRotation * wheelRoll;
         }
         
@@ -84,7 +74,6 @@ public class WheelAnimator : MonoBehaviour
             wheelFrontRight.localRotation = steerRotation * wheelRoll;
         }
         
-        // RUEDAS TRASERAS (solo giro, sin dirección)
         if (wheelBackLeft != null)
         {
             wheelBackLeft.localRotation = Quaternion.Euler(wheelRotation, 0, 0);
@@ -96,7 +85,6 @@ public class WheelAnimator : MonoBehaviour
         }
     }
     
-    // DEBUG: Ver valores en tiempo real
     void OnGUI()
     {
         if (!isInitialized) return;

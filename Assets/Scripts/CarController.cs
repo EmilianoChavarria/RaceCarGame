@@ -10,16 +10,16 @@ public class CarController : MonoBehaviour
     public float brakeSpeed = 15f;
     
     [Header("Realismo Visual")]
-    public float bodyTiltAmount = 15f; // Inclinación del carro al girar
-    public float tiltSpeed = 5f; // Velocidad de inclinación
-    public float driftAmount = 0.95f; // Cuánto se desliza lateralmente
+    public float bodyTiltAmount = 15f;
+    public float tiltSpeed = 5f; 
+    public float driftAmount = 0.95f;
     
     private Rigidbody rb;
     private float currentSpeed = 0f;
     private float verticalInput;
     private float horizontalInput;
-    private float currentTilt = 0f; // Inclinación actual
-    private Transform visualBody; // El modelo visual del carro
+    private float currentTilt = 0f; 
+    private Transform visualBody;
 
     void Start()
     {
@@ -32,17 +32,15 @@ public class CarController : MonoBehaviour
 
         // Configuración SIMPLE
         rb.mass = 1000f;
-        rb.linearDamping = 1f; // Frena naturalmente
-        rb.angularDamping = 3f; // No gira locamente
+        rb.linearDamping = 1f;
+        rb.angularDamping = 3f; 
         rb.useGravity = true;
         
-        // Buscar el ModelRotationFix para la inclinación
         visualBody = transform.Find("ModelRotationFix");
     }
 
     void Update()
     {
-        // Leer inputs
         verticalInput = Input.GetAxis("Vertical");
         horizontalInput = Input.GetAxis("Horizontal");
     }
@@ -51,17 +49,16 @@ public class CarController : MonoBehaviour
     {
         Move();
         Turn();
-        ApplyDrift(); // Nuevo: drift lateral
+        ApplyDrift(); 
     }
     
     void LateUpdate()
     {
-        ApplyBodyTilt(); // Nuevo: inclinación visual
+        ApplyBodyTilt();
     }
 
     void Move()
     {
-        // Acelerar o frenar
         if (verticalInput != 0)
         {
             currentSpeed += verticalInput * acceleration * Time.fixedDeltaTime;
@@ -69,43 +66,33 @@ public class CarController : MonoBehaviour
         }
         else
         {
-            // Desacelerar naturalmente
             currentSpeed = Mathf.MoveTowards(currentSpeed, 0, brakeSpeed * Time.fixedDeltaTime);
         }
 
-        // Freno manual
         if (Input.GetKey(KeyCode.Space))
         {
             currentSpeed = Mathf.MoveTowards(currentSpeed, 0, brakeSpeed * 2f * Time.fixedDeltaTime);
         }
 
-        // Mover el carro hacia adelante
         Vector3 movement = transform.forward * currentSpeed * Time.fixedDeltaTime;
         rb.MovePosition(rb.position + movement);
     }
 
     void Turn()
     {
-        // Solo girar si se está moviendo
         if (Mathf.Abs(currentSpeed) > 0.5f)
         {
-            // Calcular velocidad de giro basada en la velocidad del carro
             float speedFactor = Mathf.Abs(currentSpeed) / maxSpeed;
-            speedFactor = Mathf.Clamp(speedFactor, 0.3f, 1f); // Mínimo 30% de giro
+            speedFactor = Mathf.Clamp(speedFactor, 0.3f, 1f); 
             
-            // Giro proporcional a la velocidad (más lento a alta velocidad = más realista)
-            float turnReduction = 1f - (speedFactor * 0.4f); // Reducir giro hasta 40% a máxima velocidad
+            float turnReduction = 1f - (speedFactor * 0.4f); 
             
-            // INVERTIR la dirección con el signo negativo
             float turn = -horizontalInput * turnSpeed * turnReduction * Time.fixedDeltaTime;
             
-            // Si va en reversa, invertir giro OTRA VEZ (como un carro real)
             if (currentSpeed < 0)
             {
                 turn = -turn;
             }
-            
-            // Aplicar rotación suave
             Quaternion turnRotation = Quaternion.Euler(0f, turn, 0f);
             rb.MoveRotation(rb.rotation * turnRotation);
         }
@@ -113,33 +100,25 @@ public class CarController : MonoBehaviour
     
     void ApplyDrift()
     {
-        // Simular derrape lateral (drift) - como carros reales
         Vector3 localVelocity = transform.InverseTransformDirection(rb.linearVelocity);
         
-        // Reducir velocidad lateral (hace que el carro "se agarre" a la dirección)
         localVelocity.x *= driftAmount;
         
-        // Aplicar la velocidad corregida
         rb.linearVelocity = transform.TransformDirection(localVelocity);
     }
     
     void ApplyBodyTilt()
     {
-        // Inclinación visual del carro al girar (como carros reales)
         if (visualBody != null && Mathf.Abs(currentSpeed) > 1f)
         {
-            // Calcular inclinación objetivo basada en el giro (INVERTIR TAMBIÉN)
             float targetTilt = horizontalInput * bodyTiltAmount * (Mathf.Abs(currentSpeed) / maxSpeed);
             
-            // Suavizar la inclinación
             currentTilt = Mathf.Lerp(currentTilt, targetTilt, Time.deltaTime * tiltSpeed);
             
-            // La rotación base es (0, 180, 0), agregamos inclinación en Z
             visualBody.localRotation = Quaternion.Euler(0, 180, currentTilt);
         }
         else if (visualBody != null)
         {
-            // Volver a posición base cuando está parado
             currentTilt = Mathf.Lerp(currentTilt, 0f, Time.deltaTime * tiltSpeed);
             visualBody.localRotation = Quaternion.Euler(0, 180, currentTilt);
         }
