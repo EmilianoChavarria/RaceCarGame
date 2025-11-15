@@ -2,44 +2,48 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    [Header("Car Prefabs")]
-    public GameObject car1Prefab;
-    public GameObject car2Prefab;
-
-    [Header("Spawn Point")]
     public Transform spawnPoint;
 
-    private void Start()
+    public GameObject carro1Prefab;
+    public GameObject carro2Prefab;
+
+    public Speedometer speedometer;
+    public FollowCar cameraFollow; // referencia a la cámara
+
+    void Start()
     {
-        // Verificar que ya tengas datos guardados
-        Debug.Log("Pista seleccionada: " + GameData.selectedTrack);
+
         Debug.Log("Carro seleccionado: " + GameData.selectedCar);
 
-        SpawnSelectedCar();
-    }
+        GameObject prefabSeleccionado = null;
 
-    void SpawnSelectedCar()
-    {
-        GameObject carToSpawn = null;
+        if (GameData.selectedCar == "Carro1")
+            prefabSeleccionado = carro1Prefab;
 
-        // Elegir carro según GameData
-        switch (GameData.selectedCar)
+        if (GameData.selectedCar == "Carro2")
+            prefabSeleccionado = carro2Prefab;
+
+        Debug.Log("Prefab seleccionado: " + prefabSeleccionado);
+
+
+        if (prefabSeleccionado != null)
         {
-            case "Carro1":
-                carToSpawn = car1Prefab;
-                break;
+            GameObject carroInstanciado =
+                Instantiate(prefabSeleccionado, spawnPoint.position, spawnPoint.rotation);
 
-            case "Carro2":
-                carToSpawn = car2Prefab;
-                break;
+            carroInstanciado.transform.Rotate(0f, 180f, 0f);
 
-            default:
-                Debug.LogWarning("No se seleccionó carro, usando Carro1 por defecto");
-                carToSpawn = car1Prefab;
-                break;
+
+            Debug.Log("Prefab root rotation (prefabSeleccionado): " + prefabSeleccionado.transform.rotation.eulerAngles);
+            Debug.Log("Prefab root localRotation (prefabSeleccionado): " + prefabSeleccionado.transform.localRotation.eulerAngles);
+            Debug.Log("SpawnPoint rotation: " + spawnPoint.rotation.eulerAngles);
+
+
+            Rigidbody rb = carroInstanciado.GetComponent<Rigidbody>();
+            speedometer.carRigidbody = rb;
+
+            // 👉 ASIGNAR EL TARGET A LA CÁMARA DINÁMICAMENTE
+            cameraFollow.target = carroInstanciado.transform;
         }
-
-        // Instanciar el carro
-        Instantiate(carToSpawn, spawnPoint.position, spawnPoint.rotation);
     }
 }

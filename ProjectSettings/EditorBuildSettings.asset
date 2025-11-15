@@ -12,6 +12,9 @@ EditorBuildSettings:
     path: Assets/Scenes/RacetrackSelectScene.unity
     guid: c9e772598c5c03b49b069530d573ec33
   - enabled: 1
+    path: Assets/Scenes/CarSelectScene.unity
+    guid: 4505dc66f887dbc45a8fb5578a54d846
+  - enabled: 1
     path: Assets/Scenes/SampleScene.unity
     guid: 99c9720ab356a0642a771bea13969a05
   m_configObjects:
