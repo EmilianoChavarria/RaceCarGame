@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class SeleccionPistaUI : MonoBehaviour
+public class SelectRacetrackUI : MonoBehaviour
 {
     public void CargarPista1()
     {
@@ -10,7 +10,7 @@ public class SeleccionPistaUI : MonoBehaviour
 
     public void CargarPista2()
     {
-        SceneManager.LoadScene("Racetrack2");
+        SceneManager.LoadScene("SampleScene");
     }
 
     public void RegresarMenu()

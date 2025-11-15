@@ -4,6 +4,7 @@ public class MenuManager : MonoBehaviour
 {
     public FadePanel fadePanel;
 
+
     public void PlayGame()
     {
         fadePanel.FadeOutToScene("RacetrackSelectScene");
