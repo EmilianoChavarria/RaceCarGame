@@ -5,11 +5,13 @@ public class SelectRacetrackUI : MonoBehaviour
 {
     public void CargarPista1()
     {
+        GameData.selectedTrack = "SampleScene";
         SceneManager.LoadScene("SampleScene");
     }
 
     public void CargarPista2()
     {
+        GameData.selectedTrack = "SampleScene";
         SceneManager.LoadScene("SampleScene");
     }
 
