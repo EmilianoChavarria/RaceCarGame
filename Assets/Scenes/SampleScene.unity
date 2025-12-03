@@ -119,6 +119,7 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+<<<<<<< HEAD
 --- !u!1 &12985898
 GameObject:
   m_ObjectHideFlags: 0
@@ -713,6 +714,8 @@ MonoBehaviour:
   target: {fileID: 0}
   offset: {x: 0, y: 4, z: -15}
   smoothSpeed: 0.125
+=======
+>>>>>>> raceTrack
 --- !u!1 &354542359
 GameObject:
   m_ObjectHideFlags: 1
@@ -884,7 +887,11 @@ MonoBehaviour:
   m_ShadowLayerMask: 1
   m_RenderingLayers: 1
   m_ShadowRenderingLayers: 1
+<<<<<<< HEAD
 --- !u!1 &619765933
+=======
+--- !u!1 &1249635212
+>>>>>>> raceTrack
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -930,12 +937,18 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+<<<<<<< HEAD
 --- !u!1 &750573423
 GameObject:
+=======
+--- !u!65 &1249635217
+BoxCollider:
+>>>>>>> raceTrack
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
+<<<<<<< HEAD
   serializedVersion: 6
   m_Component:
   - component: {fileID: 750573424}
@@ -1477,6 +1490,24 @@ CanvasRenderer:
   m_GameObject: {fileID: 1449981006}
   m_CullTransparentMesh: 1
 --- !u!1 &1498211953
+=======
+  m_GameObject: {fileID: 1249635212}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 1
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 10, y: 2.220446e-16, z: 10}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!1 &1783055431
+>>>>>>> raceTrack
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1723,6 +1754,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
+<<<<<<< HEAD
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1746850608
 GameObject:
@@ -2295,15 +2327,75 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2056407804}
   m_CullTransparentMesh: 1
+=======
+  m_LocalEulerAnglesHint: {x: -28.267, y: 0, z: 0}
+--- !u!1001 &5314768566198563245
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 3419484472052712395, guid: c2cf507b73ff74b1c9ffa27cdb3e2598, type: 3}
+      propertyPath: m_Name
+      value: CarCamera
+      objectReference: {fileID: 0}
+    - target: {fileID: 5792359115318273109, guid: c2cf507b73ff74b1c9ffa27cdb3e2598, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 37.32938
+      objectReference: {fileID: 0}
+    - target: {fileID: 5792359115318273109, guid: c2cf507b73ff74b1c9ffa27cdb3e2598, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5792359115318273109, guid: c2cf507b73ff74b1c9ffa27cdb3e2598, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -40.77774
+      objectReference: {fileID: 0}
+    - target: {fileID: 5792359115318273109, guid: c2cf507b73ff74b1c9ffa27cdb3e2598, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5792359115318273109, guid: c2cf507b73ff74b1c9ffa27cdb3e2598, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5792359115318273109, guid: c2cf507b73ff74b1c9ffa27cdb3e2598, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5792359115318273109, guid: c2cf507b73ff74b1c9ffa27cdb3e2598, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5792359115318273109, guid: c2cf507b73ff74b1c9ffa27cdb3e2598, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5792359115318273109, guid: c2cf507b73ff74b1c9ffa27cdb3e2598, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5792359115318273109, guid: c2cf507b73ff74b1c9ffa27cdb3e2598, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: c2cf507b73ff74b1c9ffa27cdb3e2598, type: 3}
+>>>>>>> raceTrack
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
-  - {fileID: 330585546}
   - {fileID: 410087041}
   - {fileID: 832575519}
   - {fileID: 1649619705}
   - {fileID: 354542361}
+<<<<<<< HEAD
   - {fileID: 750573424}
   - {fileID: 1286944907}
   - {fileID: 199295438}
@@ -2311,3 +2403,8 @@ SceneRoots:
   - {fileID: 1746850609}
   - {fileID: 889251540}
   - {fileID: 619765935}
+=======
+  - {fileID: 1249635216}
+  - {fileID: 1783055436}
+  - {fileID: 5314768566198563245}
+>>>>>>> raceTrack
