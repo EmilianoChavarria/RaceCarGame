@@ -81,7 +81,8 @@ PrefabInstance:
       value: carro2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: 9200440560683776090, guid: 2abb49dfc214a2a49bf458a188abf5d3, type: 3}
     m_AddedGameObjects: []
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 2abb49dfc214a2a49bf458a188abf5d3, type: 3}
@@ -93,7 +94,25 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 2abb49dfc214a2a49bf458a188abf5d3, type: 3}
       insertIndex: -1
       addedObject: {fileID: 4512329424164816669}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 2abb49dfc214a2a49bf458a188abf5d3, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: -3397984331671948247}
   m_SourcePrefab: {fileID: 100100000, guid: 2abb49dfc214a2a49bf458a188abf5d3, type: 3}
+--- !u!4 &1302330634242092248 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 5032292303957512807, guid: 2abb49dfc214a2a49bf458a188abf5d3, type: 3}
+  m_PrefabInstance: {fileID: 6324327111247675071}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &2984316075569014205 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -94876483615630590, guid: 2abb49dfc214a2a49bf458a188abf5d3, type: 3}
+  m_PrefabInstance: {fileID: 6324327111247675071}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &5891779819637988708 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -8788973167661259813, guid: 2abb49dfc214a2a49bf458a188abf5d3, type: 3}
+  m_PrefabInstance: {fileID: 6324327111247675071}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &6558908115071730670 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 2abb49dfc214a2a49bf458a188abf5d3, type: 3}
@@ -111,11 +130,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c52cd63a04f686d4c9b30ed9568b5555, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CarController
-  acceleration: 15
+  moveSpeed: 20
   maxSpeed: 20
   turnSpeed: 70
-  drag: 2
-  driftFactor: 0.95
+  acceleration: 15
+  brakeSpeed: 15
+  bodyTiltAmount: 15
+  tiltSpeed: 5
+  driftAmount: 0.95
 --- !u!54 &3022299788322015657
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -164,3 +186,27 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 0, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &-3397984331671948247
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6558908115071730670}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a8fd504a04bfd8e43a4984a8fac346e5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::WheelAnimator
+  wheelFrontLeft: {fileID: 1302330634242092248}
+  wheelFrontRight: {fileID: 5891779819637988708}
+  wheelBackLeft: {fileID: 6977271551141232982}
+  wheelBackRight: {fileID: 2984316075569014205}
+  wheelRadius: 0.35
+  maxSteerAngle: 30
+  steerSpeed: 5
+--- !u!4 &6977271551141232982 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -5255495715643424791, guid: 2abb49dfc214a2a49bf458a188abf5d3, type: 3}
+  m_PrefabInstance: {fileID: 6324327111247675071}
+  m_PrefabAsset: {fileID: 0}
