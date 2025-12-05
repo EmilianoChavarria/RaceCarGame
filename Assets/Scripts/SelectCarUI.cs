@@ -1,18 +1,18 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class SelectCarkUI : MonoBehaviour
+public class SelectCarUI : MonoBehaviour
 {
-    public void CargarCarro1()
+    public void SeleccionarCarro1()
     {
         GameData.selectedCar = "Carro1";
-        SceneManager.LoadScene("SampleScene");
+        SceneManager.LoadScene("RacetrackSelectScene");
     }
 
-    public void CargarCarro2()
+    public void SeleccionarCarro2()
     {
         GameData.selectedCar = "Carro2";
-        SceneManager.LoadScene("SampleScene");
+        SceneManager.LoadScene("RacetrackSelectScene");
     }
 
     public void RegresarMenu()
