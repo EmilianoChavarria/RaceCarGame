@@ -1383,8 +1383,53 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 60a17dbe0bbfdc7408a1838a37ced65a, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1305000434}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 60a17dbe0bbfdc7408a1838a37ced65a, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1305000433}
   m_SourcePrefab: {fileID: 100100000, guid: 60a17dbe0bbfdc7408a1838a37ced65a, type: 3}
+--- !u!1 &1305000432 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 60a17dbe0bbfdc7408a1838a37ced65a, type: 3}
+  m_PrefabInstance: {fileID: 1305000431}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1305000433
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1305000432}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9af92adc602564c459a47fa097ff9def, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::TurboPickup
+  pickupEffect: {fileID: 0}
+--- !u!135 &1305000434
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1305000432}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 0.50039124
+  m_Center: {x: -0.000003844523, y: -0.000000011417628, z: 0.50038934}
 --- !u!1 &1548957869
 GameObject:
   m_ObjectHideFlags: 0
@@ -1691,8 +1736,53 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 60a17dbe0bbfdc7408a1838a37ced65a, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1893995967}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 60a17dbe0bbfdc7408a1838a37ced65a, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1893995966}
   m_SourcePrefab: {fileID: 100100000, guid: 60a17dbe0bbfdc7408a1838a37ced65a, type: 3}
+--- !u!1 &1893995965 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 60a17dbe0bbfdc7408a1838a37ced65a, type: 3}
+  m_PrefabInstance: {fileID: 1893995964}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1893995966
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1893995965}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9af92adc602564c459a47fa097ff9def, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::TurboPickup
+  pickupEffect: {fileID: 0}
+--- !u!135 &1893995967
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1893995965}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 0.50039124
+  m_Center: {x: 0.000030457926, y: 0.000030502666, z: 0.50039124}
 --- !u!1001 &2083881378
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1748,8 +1838,53 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 60a17dbe0bbfdc7408a1838a37ced65a, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2083881381}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 60a17dbe0bbfdc7408a1838a37ced65a, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2083881380}
   m_SourcePrefab: {fileID: 100100000, guid: 60a17dbe0bbfdc7408a1838a37ced65a, type: 3}
+--- !u!1 &2083881379 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 60a17dbe0bbfdc7408a1838a37ced65a, type: 3}
+  m_PrefabInstance: {fileID: 2083881378}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &2083881380
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2083881379}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9af92adc602564c459a47fa097ff9def, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::TurboPickup
+  pickupEffect: {fileID: 0}
+--- !u!135 &2083881381
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2083881379}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 0.50039136
+  m_Center: {x: 0.00000001491282, y: -0.00000005965128, z: 0.50039136}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
