@@ -167,6 +167,19 @@ public class CarController : MonoBehaviour
         }
     }
 
+    void OnTriggerEnter(Collider other)
+    {
+        // Busca una referencia al RaceManager en la escena
+        RaceManager raceManager = FindObjectOfType<RaceManager>();
+
+        if (other.CompareTag("FinishLine") && raceManager != null)
+        {
+            // Llama al método del gestor de carrera cuando el coche cruza la meta
+            raceManager.FinishLap();
+             Debug.Log("Trigger detectado: Meta cruzada.");
+        }
+    }
+
     // Para UI o debug
     public float GetSpeed() => currentSpeed;
     public float GetSpeedKPH() => currentSpeed * 3.6f;
