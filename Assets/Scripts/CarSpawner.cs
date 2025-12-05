@@ -36,6 +36,14 @@ public class CarSpawner : MonoBehaviour
         {
             GameObject carroInstanciado = Instantiate(carroASpawnear, spawnPoint.position, spawnPoint.rotation);
             
+            // Asegurar que el carro tenga TurboSystem
+            TurboSystem turboSystem = carroInstanciado.GetComponent<TurboSystem>();
+            if (turboSystem == null)
+            {
+                turboSystem = carroInstanciado.AddComponent<TurboSystem>();
+                Debug.Log("[CarSpawner] TurboSystem agregado al carro clonado");
+            }
+            
             // Asignar cámara al carro
             Camera mainCamera = Camera.main;
             if (mainCamera != null)

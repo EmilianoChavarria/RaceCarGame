@@ -6,14 +6,23 @@ public class TurboSystem : MonoBehaviour
     [Tooltip("Multiplicador de velocidad durante el turbo")]
     public float turboSpeedMultiplier = 1.5f;
     
-    [Tooltip("Duración del turbo en segundos")]
-    public float turboDuration = 3f;
+    [Tooltip("Fuerza de aceleración extra durante turbo")]
+    public float turboAccelerationBoost = 5f;
+    
+    [Tooltip("Cantidad máxima de turbo disponible")]
+    public float maxTurboFuel = 100f;
+    
+    [Tooltip("Velocidad de consumo de turbo por segundo")]
+    public float turboConsumptionRate = 33.3f;
+    
+    [Tooltip("Velocidad de recarga del turbo por segundo (cuando no está en uso)")]
+    public float turboRechargeRate = 10f;
     
     [Tooltip("Tiempo de recarga del turbo en segundos")]
     public float turboCooldown = 5f;
     
-    [Tooltip("Fuerza de aceleración extra durante turbo")]
-    public float turboAccelerationBoost = 5f;
+    [Tooltip("Duración máxima del turbo en segundos (límite de seguridad)")]
+    public float turboDuration = 10f;
 
     [Header("Efectos Visuales (Opcional)")]
     [Tooltip("Partículas que se activan durante el turbo")]
@@ -21,6 +30,13 @@ public class TurboSystem : MonoBehaviour
     
     [Tooltip("Color de emisión durante turbo")]
     public Color turboEmissionColor = Color.cyan;
+
+    public void AddTurboFuel(float amount)
+    {
+        currentTurboFuel = Mathf.Min(currentTurboFuel + amount, maxTurboFuel);
+        Debug.Log($"[TURBO PICKUP] Se agregó {amount} de turbo. Total: {currentTurboFuel}/{maxTurboFuel}");
+    }
+
 
     // Estados del turbo
     private enum TurboState
@@ -32,6 +48,7 @@ public class TurboSystem : MonoBehaviour
 
     private TurboState currentState = TurboState.Ready;
     private float stateTimer = 0f;
+    private float currentTurboFuel = 100f;
     private CarController carController;
     
     // Valores originales del carro
@@ -39,10 +56,11 @@ public class TurboSystem : MonoBehaviour
     private float originalAcceleration;
     
     // Propiedades públicas para UI
-    public bool IsTurboReady => currentState == TurboState.Ready;
+    public bool IsTurboReady => currentState == TurboState.Ready && currentTurboFuel > 0f;
     public bool IsTurboActive => currentState == TurboState.Active;
     public float GetCooldownProgress => currentState == TurboState.Cooldown ? stateTimer / turboCooldown : 0f;
     public float GetTurboProgress => currentState == TurboState.Active ? stateTimer / turboDuration : 0f;
+    public float GetTurboFuelPercent => currentTurboFuel / maxTurboFuel;
 
     void Start()
     {
@@ -70,8 +88,8 @@ public class TurboSystem : MonoBehaviour
 
     void HandleInput()
     {
-        // Detectar tecla R para activar turbo
-        if (Input.GetKeyDown(KeyCode.R) && currentState == TurboState.Ready)
+        // Detectar tecla R para activar turbo (solo si hay combustible)
+        if (Input.GetKeyDown(KeyCode.R) && currentState == TurboState.Ready && currentTurboFuel > 0f)
         {
             ActivateTurbo();
         }
@@ -82,14 +100,22 @@ public class TurboSystem : MonoBehaviour
         switch (currentState)
         {
             case TurboState.Ready:
-                // Esperando activación
+                // Recargar turbo cuando está listo y no en uso
+                if (currentTurboFuel < maxTurboFuel)
+                {
+                    currentTurboFuel = Mathf.Min(currentTurboFuel + turboRechargeRate * Time.deltaTime, maxTurboFuel);
+                }
                 break;
 
             case TurboState.Active:
+                // Consumir turbo
+                currentTurboFuel -= turboConsumptionRate * Time.deltaTime;
                 stateTimer += Time.deltaTime;
                 
-                if (stateTimer >= turboDuration)
+                // Detener turbo si se acabó el combustible o se alcanzó el tiempo máximo
+                if (currentTurboFuel <= 0f || stateTimer >= 10f) // 10s como límite de seguridad
                 {
+                    currentTurboFuel = Mathf.Max(0f, currentTurboFuel);
                     DeactivateTurbo();
                 }
                 break;
