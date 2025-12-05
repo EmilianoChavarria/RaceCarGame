@@ -1,4 +1,4 @@
-using UnityEngine;
+using UnityEngine; 
 
 public class TurboSystem : MonoBehaviour
 {
@@ -15,6 +15,14 @@ public class TurboSystem : MonoBehaviour
     [Tooltip("Fuerza de aceleración extra durante turbo")]
     public float turboAccelerationBoost = 5f;
 
+    [Header("Pickup de Turbo (Opcional)")]
+    [Tooltip("¿Puede el jugador obtener turbo mediante pickups?")]
+    public bool allowTurboPickup = true;
+
+    // --- NUEVO ---
+    private bool hasTurboCharge = false;   // Pickup recogido pero no usado
+    // -------------
+
     [Header("Efectos Visuales (Opcional)")]
     [Tooltip("Partículas que se activan durante el turbo")]
     public ParticleSystem turboParticles;
@@ -22,23 +30,20 @@ public class TurboSystem : MonoBehaviour
     [Tooltip("Color de emisión durante turbo")]
     public Color turboEmissionColor = Color.cyan;
 
-    // Estados del turbo
     private enum TurboState
     {
-        Ready,      // Listo para usar
-        Active,     // Turbo activo
-        Cooldown    // Recargando
+        Ready,
+        Active,
+        Cooldown
     }
 
     private TurboState currentState = TurboState.Ready;
     private float stateTimer = 0f;
     private CarController carController;
     
-    // Valores originales del carro
     private float originalMaxSpeed;
     private float originalAcceleration;
     
-    // Propiedades públicas para UI
     public bool IsTurboReady => currentState == TurboState.Ready;
     public bool IsTurboActive => currentState == TurboState.Active;
     public float GetCooldownProgress => currentState == TurboState.Cooldown ? stateTimer / turboCooldown : 0f;
@@ -82,7 +87,6 @@ public class TurboSystem : MonoBehaviour
         switch (currentState)
         {
             case TurboState.Ready:
-                // Esperando activación
                 break;
 
             case TurboState.Active:
@@ -110,17 +114,15 @@ public class TurboSystem : MonoBehaviour
         currentState = TurboState.Active;
         stateTimer = 0f;
 
-        // Aplicar boost al carro
         carController.maxSpeed = originalMaxSpeed * turboSpeedMultiplier;
         carController.acceleration = originalAcceleration + turboAccelerationBoost;
 
-        // Activar efectos visuales
         if (turboParticles != null)
         {
             turboParticles.Play();
         }
 
-        Debug.Log($"[TURBO] Estado: READY → ACTIVE | Velocidad: {originalMaxSpeed} → {carController.maxSpeed} | Duración: {turboDuration}s");
+        Debug.Log($"[TURBO] Estado: READY → ACTIVE | Velocidad: {originalMaxSpeed} → {carController.maxSpeed}");
     }
 
     void DeactivateTurbo()
@@ -128,28 +130,25 @@ public class TurboSystem : MonoBehaviour
         currentState = TurboState.Cooldown;
         stateTimer = 0f;
 
-        // Restaurar valores originales
         carController.maxSpeed = originalMaxSpeed;
         carController.acceleration = originalAcceleration;
 
-        // Desactivar efectos visuales
         if (turboParticles != null)
         {
             turboParticles.Stop();
         }
 
-        Debug.Log($"[TURBO] Estado: ACTIVE → COOLDOWN | Velocidad restaurada: {carController.maxSpeed} | Tiempo de recarga: {turboCooldown}s");
+        Debug.Log($"[TURBO] ACTIVE → COOLDOWN | Velocidad restaurada: {carController.maxSpeed}");
     }
 
     void ResetTurbo()
     {
         currentState = TurboState.Ready;
         stateTimer = 0f;
-        
-        Debug.Log("[TURBO] Estado: COOLDOWN → READY | ¡Turbo disponible! Presiona R para activar");
+
+        Debug.Log("[TURBO] COOLDOWN → READY | Turbo disponible!");
     }
 
-    // Método opcional para cancelar turbo manualmente
     public void CancelTurbo()
     {
         if (currentState == TurboState.Active)
@@ -158,7 +157,6 @@ public class TurboSystem : MonoBehaviour
         }
     }
 
-    // Método para UI - obtener tiempo restante
     public float GetRemainingTime()
     {
         switch (currentState)
@@ -172,7 +170,20 @@ public class TurboSystem : MonoBehaviour
         }
     }
 
-    // Debug visual en el editor
+    // --------------------------
+    //   NUEVA FUNCIÓN PICKUP  
+    // --------------------------
+    public void AddTurboCharge()
+    {
+        if (!allowTurboPickup)
+            return;
+
+        hasTurboCharge = true;
+
+        Debug.Log("[TURBO PICKUP] Recogido. Turbo listo para usar (tecla R)");
+    }
+    // --------------------------
+
     void OnGUI()
     {
         if (Debug.isDebugBuild)
