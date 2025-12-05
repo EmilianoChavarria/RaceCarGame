@@ -101,6 +101,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 4d516e7e57d02034cbdc9e91efe4eddd, type: 3}
       insertIndex: -1
       addedObject: {fileID: 3538576763639993816}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 4d516e7e57d02034cbdc9e91efe4eddd, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1003909303588521333}
   m_SourcePrefab: {fileID: 100100000, guid: 4d516e7e57d02034cbdc9e91efe4eddd, type: 3}
 --- !u!4 &1420629616430309611 stripped
 Transform:
@@ -209,6 +212,27 @@ MonoBehaviour:
   wheelRadius: 0.35
   maxSteerAngle: 30
   steerSpeed: 5
+--- !u!114 &1003909303588521333
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7050544222112974520}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9422727e365b62144868ed69c233dc5f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::TurboSystem
+  turboSpeedMultiplier: 1.5
+  turboAccelerationBoost: 5
+  maxTurboFuel: 100
+  turboConsumptionRate: 33.3
+  turboRechargeRate: 10
+  turboCooldown: 5
+  turboDuration: 10
+  turboParticles: {fileID: 0}
+  turboEmissionColor: {r: 0, g: 1, b: 1, a: 1}
 --- !u!4 &7718802751746693170 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8788973167661259813, guid: 4d516e7e57d02034cbdc9e91efe4eddd, type: 3}
