@@ -87,8 +87,7 @@ public class CarController : MonoBehaviour
             
             float turnReduction = 1f - (speedFactor * 0.4f); 
             
-            // CORREGIDO: Quité el signo negativo
-            float turn = horizontalInput * turnSpeed * turnReduction * Time.fixedDeltaTime;
+            float turn = -horizontalInput * turnSpeed * turnReduction * Time.fixedDeltaTime;
             
             if (currentSpeed < 0)
             {

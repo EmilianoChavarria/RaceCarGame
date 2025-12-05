@@ -5,20 +5,20 @@ public class TurboSystem : MonoBehaviour
     [Header("Configuración de Turbo")]
     [Tooltip("Multiplicador de velocidad durante el turbo")]
     public float turboSpeedMultiplier = 1.5f;
-    
+
     [Tooltip("Duración del turbo en segundos")]
     public float turboDuration = 3f;
-    
+
     [Tooltip("Tiempo de recarga del turbo en segundos")]
     public float turboCooldown = 5f;
-    
+
     [Tooltip("Fuerza de aceleración extra durante turbo")]
     public float turboAccelerationBoost = 5f;
 
     [Header("Efectos Visuales (Opcional)")]
     [Tooltip("Partículas que se activan durante el turbo")]
     public ParticleSystem turboParticles;
-    
+
     [Tooltip("Color de emisión durante turbo")]
     public Color turboEmissionColor = Color.cyan;
 
@@ -33,11 +33,11 @@ public class TurboSystem : MonoBehaviour
     private TurboState currentState = TurboState.Ready;
     private float stateTimer = 0f;
     private CarController carController;
-    
+
     // Valores originales del carro
     private float originalMaxSpeed;
     private float originalAcceleration;
-    
+
     // Propiedades públicas para UI
     public bool IsTurboReady => currentState == TurboState.Ready;
     public bool IsTurboActive => currentState == TurboState.Active;
@@ -47,7 +47,7 @@ public class TurboSystem : MonoBehaviour
     void Start()
     {
         carController = GetComponent<CarController>();
-        
+
         if (carController == null)
         {
             Debug.LogError("TurboSystem requiere un CarController en el mismo GameObject!");
@@ -57,7 +57,7 @@ public class TurboSystem : MonoBehaviour
 
         originalMaxSpeed = carController.maxSpeed;
         originalAcceleration = carController.acceleration;
-        
+
         currentState = TurboState.Ready;
         Debug.Log("[TURBO] Sistema inicializado - Estado: READY");
     }
@@ -87,7 +87,7 @@ public class TurboSystem : MonoBehaviour
 
             case TurboState.Active:
                 stateTimer += Time.deltaTime;
-                
+
                 if (stateTimer >= turboDuration)
                 {
                     DeactivateTurbo();
@@ -96,7 +96,7 @@ public class TurboSystem : MonoBehaviour
 
             case TurboState.Cooldown:
                 stateTimer += Time.deltaTime;
-                
+
                 if (stateTimer >= turboCooldown)
                 {
                     ResetTurbo();
@@ -105,7 +105,8 @@ public class TurboSystem : MonoBehaviour
         }
     }
 
-    void ActivateTurbo()
+    // Hice público este método para que otros scripts (CarController) puedan activarlo
+    public void ActivateTurbo()
     {
         currentState = TurboState.Active;
         stateTimer = 0f;
@@ -145,7 +146,7 @@ public class TurboSystem : MonoBehaviour
     {
         currentState = TurboState.Ready;
         stateTimer = 0f;
-        
+
         Debug.Log("[TURBO] Estado: COOLDOWN → READY | ¡Turbo disponible! Presiona R para activar");
     }
 
@@ -155,6 +156,25 @@ public class TurboSystem : MonoBehaviour
         if (currentState == TurboState.Active)
         {
             DeactivateTurbo();
+        }
+    }
+
+    // Permite que un pickup deje el turbo listo inmediatamente
+    public void ForceReady()
+    {
+        currentState = TurboState.Ready;
+        stateTimer = 0f;
+
+        Debug.Log("[TURBO] Turbo recargado por Pickup");
+    }
+
+    // Forzar detener el turbo (por colisión)
+    public void ForceStopTurbo()
+    {
+        if (currentState == TurboState.Active)
+        {
+            DeactivateTurbo(); // Apaga turbo y pasa a cooldown
+            Debug.Log("[TURBO] Turbo cancelado por colisión!");
         }
     }
 
@@ -182,7 +202,7 @@ public class TurboSystem : MonoBehaviour
             style.normal.textColor = Color.white;
 
             string statusText = $"Turbo: {currentState}";
-            
+
             if (currentState == TurboState.Active)
             {
                 style.normal.textColor = Color.green;
