@@ -13,7 +13,7 @@ public class TurboSystem : MonoBehaviour
     public float maxTurboFuel = 100f;
     
     [Tooltip("Velocidad de consumo de turbo por segundo")]
-    public float turboConsumptionRate = 12.5f; // 100/8 = 12.5 para durar 8 segundos
+    public float turboConsumptionRate = 8.33f; // 100/8 = 12.5 para durar 8 segundos
     
     [Tooltip("Velocidad de recarga del turbo por segundo (cuando no está en uso)")]
     public float turboRechargeRate = 10f;
@@ -239,7 +239,7 @@ public class TurboSystem : MonoBehaviour
                 statusText += "\n¡Presiona Espacio!";
             }
 
-            GUI.Label(new Rect(10, 10, 300, 100), statusText, style);
+            GUI.Label(new Rect(10, 200, 300, 100), statusText, style);
         }
     }
 }
