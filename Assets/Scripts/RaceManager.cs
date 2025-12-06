@@ -22,7 +22,7 @@ public class RaceManager : MonoBehaviour
     // Referencia al coche para habilitar/deshabilitar la conducción si es necesario
     public CarController playerCar;
     private TurboSystem turboSystem;
-    private PickupManager pickupManager; 
+    private PickupManager pickupManager;
 
     void Start()
     {
@@ -30,13 +30,13 @@ public class RaceManager : MonoBehaviour
         // Por ahora, lo llamamos directamente para que funcione.
         StartRace();
         UpdateUITexts();
-        
+
         // Obtener referencia al TurboSystem del carro
         if (playerCar == null)
         {
             playerCar = FindFirstObjectByType<CarController>();
         }
-        
+
         if (playerCar != null)
         {
             turboSystem = playerCar.GetComponent<TurboSystem>();
@@ -45,7 +45,7 @@ public class RaceManager : MonoBehaviour
                 Debug.Log("[RaceManager] TurboSystem encontrado. Se reiniciará con cada vuelta.");
             }
         }
-        
+
         // Obtener referencia al PickupManager
         pickupManager = FindFirstObjectByType<PickupManager>();
         if (pickupManager == null)
@@ -60,7 +60,7 @@ public class RaceManager : MonoBehaviour
         {
             // Acumula el tiempo desde el inicio de la carrera
             currentTime = Time.time - startTime;
-            UpdateUITexts(); 
+            UpdateUITexts();
         }
     }
 
@@ -80,7 +80,7 @@ public class RaceManager : MonoBehaviour
         if (!raceStarted) return;
 
         // 1. Calcula el tiempo de la vuelta
-        float newLapTime = currentTime; 
+        float newLapTime = currentTime;
 
         // 2. Actualiza el Mejor Tiempo
         if (newLapTime < bestLapTime)
@@ -88,7 +88,7 @@ public class RaceManager : MonoBehaviour
             bestLapTime = newLapTime;
         }
 
-        lastLapTime = newLapTime; 
+        lastLapTime = newLapTime;
 
         // 3. Incrementa la vuelta y chequea si la carrera terminó
         currentLap++;
@@ -105,16 +105,16 @@ public class RaceManager : MonoBehaviour
                 turboSystem.ResetTurboForNewLap();
                 Debug.Log("[RaceManager] Turbo reiniciado para nueva vuelta.");
             }
-            
+
             // Respawnear todos los pickups
             if (pickupManager != null)
             {
                 pickupManager.RespawnAllPickups();
                 Debug.Log("[RaceManager] Pickups respawneados para nueva vuelta.");
             }
-            
+
             // Reinicia el contador de tiempo para la nueva vuelta
-            startTime = Time.time; 
+            startTime = Time.time;
             UpdateUITexts();
             Debug.Log($"Vuelta completada: {lastLapTime:F2}s. Mejor tiempo: {bestLapTime:F2}s.");
         }
@@ -123,11 +123,16 @@ public class RaceManager : MonoBehaviour
     public void EndRace()
     {
         raceStarted = false;
-        // playerCar.DisableDriving(); // Deshabilitar si la carrera termina
+
+        FinishRaceUI finishUI = FindFirstObjectByType<FinishRaceUI>();
+        if (finishUI != null)
+        {
+            finishUI.ShowFinishPanel();
+        }
 
         Debug.Log("¡Carrera Terminada!");
-        // Aquí podrías guardar el tiempo final, mostrar una pantalla de resultados, etc.
     }
+
 
     // -------------------------- UI --------------------------
 
