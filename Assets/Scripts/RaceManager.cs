@@ -20,7 +20,9 @@ public class RaceManager : MonoBehaviour
     public TextMeshProUGUI bestTimeText; // Muestra el mejor tiempo
 
     // Referencia al coche para habilitar/deshabilitar la conducción si es necesario
-    public CarController playerCar; 
+    public CarController playerCar;
+    private TurboSystem turboSystem;
+    private PickupManager pickupManager; 
 
     void Start()
     {
@@ -28,6 +30,28 @@ public class RaceManager : MonoBehaviour
         // Por ahora, lo llamamos directamente para que funcione.
         StartRace();
         UpdateUITexts();
+        
+        // Obtener referencia al TurboSystem del carro
+        if (playerCar == null)
+        {
+            playerCar = FindFirstObjectByType<CarController>();
+        }
+        
+        if (playerCar != null)
+        {
+            turboSystem = playerCar.GetComponent<TurboSystem>();
+            if (turboSystem != null)
+            {
+                Debug.Log("[RaceManager] TurboSystem encontrado. Se reiniciará con cada vuelta.");
+            }
+        }
+        
+        // Obtener referencia al PickupManager
+        pickupManager = FindFirstObjectByType<PickupManager>();
+        if (pickupManager == null)
+        {
+            Debug.LogWarning("[RaceManager] PickupManager no encontrado. Los pickups no se respawnearán.");
+        }
     }
 
     void Update()
@@ -75,6 +99,20 @@ public class RaceManager : MonoBehaviour
         }
         else
         {
+            // Reinicia el turbo para la nueva vuelta
+            if (turboSystem != null)
+            {
+                turboSystem.ResetTurboForNewLap();
+                Debug.Log("[RaceManager] Turbo reiniciado para nueva vuelta.");
+            }
+            
+            // Respawnear todos los pickups
+            if (pickupManager != null)
+            {
+                pickupManager.RespawnAllPickups();
+                Debug.Log("[RaceManager] Pickups respawneados para nueva vuelta.");
+            }
+            
             // Reinicia el contador de tiempo para la nueva vuelta
             startTime = Time.time; 
             UpdateUITexts();

@@ -170,7 +170,7 @@ public class CarController : MonoBehaviour
     void OnTriggerEnter(Collider other)
     {
         // Busca una referencia al RaceManager en la escena
-        RaceManager raceManager = FindObjectOfType<RaceManager>();
+        RaceManager raceManager = FindFirstObjectByType<RaceManager>();
 
         if (other.CompareTag("FinishLine") && raceManager != null)
         {
