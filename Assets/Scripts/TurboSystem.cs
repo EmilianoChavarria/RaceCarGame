@@ -4,16 +4,16 @@ public class TurboSystem : MonoBehaviour
 {
     [Header("Configuración de Turbo")]
     [Tooltip("Multiplicador de velocidad durante el turbo")]
-    public float turboSpeedMultiplier = 1.5f;
+    public float turboSpeedMultiplier = 2f;
     
     [Tooltip("Fuerza de aceleración extra durante turbo")]
-    public float turboAccelerationBoost = 5f;
+    public float turboAccelerationBoost = 20f;
     
     [Tooltip("Cantidad máxima de turbo disponible")]
     public float maxTurboFuel = 100f;
     
     [Tooltip("Velocidad de consumo de turbo por segundo")]
-    public float turboConsumptionRate = 33.3f;
+    public float turboConsumptionRate = 12.5f; // 100/8 = 12.5 para durar 8 segundos
     
     [Tooltip("Velocidad de recarga del turbo por segundo (cuando no está en uso)")]
     public float turboRechargeRate = 10f;
@@ -21,8 +21,8 @@ public class TurboSystem : MonoBehaviour
     [Tooltip("Tiempo de recarga del turbo en segundos")]
     public float turboCooldown = 5f;
     
-    [Tooltip("Duración máxima del turbo en segundos (límite de seguridad)")]
-    public float turboDuration = 10f;
+    [Tooltip("Duración del turbo en segundos")]
+    public float turboDuration = 8f;
 
     [Header("Efectos Visuales (Opcional)")]
     [Tooltip("Partículas que se activan durante el turbo")]
@@ -35,6 +35,12 @@ public class TurboSystem : MonoBehaviour
     {
         currentTurboFuel = Mathf.Min(currentTurboFuel + amount, maxTurboFuel);
         Debug.Log($"[TURBO PICKUP] Se agregó {amount} de turbo. Total: {currentTurboFuel}/{maxTurboFuel}");
+        
+        // Activar turbo inmediatamente al recoger pickup
+        if (currentState == TurboState.Ready)
+        {
+            ActivateTurbo();
+        }
     }
 
 
@@ -88,11 +94,8 @@ public class TurboSystem : MonoBehaviour
 
     void HandleInput()
     {
-        // Detectar tecla R para activar turbo (solo si hay combustible)
-        if (Input.GetKeyDown(KeyCode.R) && currentState == TurboState.Ready && currentTurboFuel > 0f)
-        {
-            ActivateTurbo();
-        }
+        // El turbo se activa automáticamente al recoger pickups
+        // No se puede activar manualmente
     }
 
     void UpdateStateMachine()
@@ -112,10 +115,10 @@ public class TurboSystem : MonoBehaviour
                 currentTurboFuel -= turboConsumptionRate * Time.deltaTime;
                 stateTimer += Time.deltaTime;
                 
-                // Detener turbo si se acabó el combustible o se alcanzó el tiempo máximo
-                if (currentTurboFuel <= 0f || stateTimer >= 10f) // 10s como límite de seguridad
+                // Detener turbo si se acabó el combustible
+                if (currentTurboFuel <= 0f)
                 {
-                    currentTurboFuel = Mathf.Max(0f, currentTurboFuel);
+                    currentTurboFuel = 0f;
                     DeactivateTurbo();
                 }
                 break;
@@ -207,12 +210,12 @@ public class TurboSystem : MonoBehaviour
             style.fontSize = 20;
             style.normal.textColor = Color.white;
 
-            string statusText = $"Turbo: {currentState}";
+            string statusText = $"Turbo: {currentState} ({currentTurboFuel:F1}/{maxTurboFuel:F1})";
             
             if (currentState == TurboState.Active)
             {
                 style.normal.textColor = Color.green;
-                statusText += $"\nTiempo: {(turboDuration - stateTimer):F1}s";
+                statusText += $"\nDuración: {(turboDuration - stateTimer):F1}s";
             }
             else if (currentState == TurboState.Cooldown)
             {
@@ -222,7 +225,7 @@ public class TurboSystem : MonoBehaviour
             else
             {
                 style.normal.textColor = Color.cyan;
-                statusText += "\n¡Presiona R!";
+                statusText += "\n[Automático al recoger pickups]";
             }
 
             GUI.Label(new Rect(10, 10, 300, 100), statusText, style);
