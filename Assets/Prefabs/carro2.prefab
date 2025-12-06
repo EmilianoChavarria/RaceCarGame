@@ -133,11 +133,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c52cd63a04f686d4c9b30ed9568b5555, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CarController
-  moveSpeed: 20
-  maxSpeed: 20
+  moveSpeed: 40
+  maxSpeed: 40
   turnSpeed: 70
-  acceleration: 15
-  brakeSpeed: 15
+  acceleration: 40
+  brakeSpeed: 30
   bodyTiltAmount: 15
   tiltSpeed: 5
   driftAmount: 0.95
