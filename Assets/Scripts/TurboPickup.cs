@@ -33,6 +33,7 @@ public class TurboPickup : MonoBehaviour
     private PickupState currentState = PickupState.Idle;
     private float stateTimer = 0f;
     private Vector3 originalScale;
+    private Collider pickupCollider;
 
     void Start()
     {
@@ -41,6 +42,29 @@ public class TurboPickup : MonoBehaviour
         
         // Aplicar escala inactiva
         transform.localScale = originalScale * inactiveScale;
+        
+        // Obtener collider y asegurar que sea trigger
+        pickupCollider = GetComponent<Collider>();
+        if (pickupCollider != null)
+        {
+            pickupCollider.isTrigger = true;
+            
+            // Si es SphereCollider, aumentar radio para mejor detección
+            if (pickupCollider is SphereCollider sphereCol)
+            {
+                sphereCol.radius = 3f; // Radio amplio para mejor detección
+            }
+            
+            Debug.Log($"[TURBO PICKUP] Collider configurado como trigger. Tipo: {pickupCollider.GetType().Name}");
+        }
+        else
+        {
+            Debug.LogWarning("[TURBO PICKUP] No hay Collider en el pickup! Agregando SphereCollider...");
+            SphereCollider sphere = gameObject.AddComponent<SphereCollider>();
+            sphere.isTrigger = true;
+            sphere.radius = 3f; // Radio amplio para detección mejor
+            pickupCollider = sphere;
+        }
         
         // Inicializar estado
         EnterState(PickupState.Idle);
@@ -89,9 +113,6 @@ public class TurboPickup : MonoBehaviour
         // Rotación más rápida durante la recogida
         transform.Rotate(0, rotationSpeed * 2f * Time.deltaTime, 0);
 
-        // Log del progreso
-        Debug.Log($"[TURBO PICKUP] Recogiendo... Progreso: {progress:P0}");
-
         // Cuando se completa la animación
         if (stateTimer >= pickupDuration)
         {
@@ -106,20 +127,23 @@ public class TurboPickup : MonoBehaviour
         // Solo recoger si estamos en estado Idle
         if (currentState != PickupState.Idle)
         {
-            Debug.Log($"[TURBO PICKUP] Ignorando colisión. Estado actual: {currentState}");
             return;
         }
 
         Debug.Log($"[TURBO PICKUP] Colisión detectada con: {other.gameObject.name}");
 
-        // Buscar TurboSystem en el objeto que chocó
+        // Buscar TurboSystem en el objeto que chocó o en su padre
         TurboSystem turbo = other.GetComponent<TurboSystem>();
+        if (turbo == null)
+        {
+            turbo = other.GetComponentInParent<TurboSystem>();
+        }
 
         if (turbo != null)
         {
             // Agregar combustible de turbo
             turbo.AddTurboFuel(50f);
-            Debug.Log("[TURBO PICKUP] ¡Turbo recargado correctamente!");
+            Debug.Log($"[TURBO PICKUP] ¡Turbo recargado correctamente! Total: {turbo.GetTurboFuelPercent * 100:F0}%");
 
             // Cambiar estado a Collected
             ChangeState(PickupState.Collected);
@@ -197,6 +221,18 @@ public class TurboPickup : MonoBehaviour
         // Destruir el GameObject después de un frame
         Destroy(gameObject);
         Debug.Log("[TURBO PICKUP] TurboBoost_PowerUp destruido");
+    }
+
+    /// <summary>
+    /// Resetea el pickup a su estado inicial (para respawn)
+    /// </summary>
+    public void ResetState()
+    {
+        currentState = PickupState.Idle;
+        stateTimer = 0f;
+        transform.localScale = originalScale * inactiveScale;
+        
+        Debug.Log("[TURBO PICKUP] Estado reseteado a IDLE");
     }
 
     // Debug visual en editor
