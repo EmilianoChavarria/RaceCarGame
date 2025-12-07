@@ -5,8 +5,10 @@ public class TurboSystem : MonoBehaviour
     [Header("Configuración de Turbo")]
     [Tooltip("Multiplicador de velocidad durante el turbo")]
     public float turboSpeedMultiplier = 2f;
+    public float turboSpeedMultiplier = 2f;
     
     [Tooltip("Fuerza de aceleración extra durante turbo")]
+    public float turboAccelerationBoost = 20f;
     public float turboAccelerationBoost = 20f;
     
     [Tooltip("Cantidad máxima de turbo disponible")]
@@ -21,6 +23,8 @@ public class TurboSystem : MonoBehaviour
     [Tooltip("Tiempo de recarga del turbo en segundos")]
     public float turboCooldown = 5f;
     
+    [Tooltip("Duración del turbo en segundos")]
+    public float turboDuration = 8f;
     [Tooltip("Duración del turbo en segundos")]
     public float turboDuration = 8f;
 
@@ -107,6 +111,8 @@ public class TurboSystem : MonoBehaviour
     {
         // El turbo se activa automáticamente al recoger pickups
         // No se puede activar manualmente
+        // El turbo se activa automáticamente al recoger pickups
+        // No se puede activar manualmente
     }
 
     void UpdateStateMachine()
@@ -128,7 +134,10 @@ public class TurboSystem : MonoBehaviour
                 
                 // Detener turbo si se acabó el combustible
                 if (currentTurboFuel <= 0f)
+                // Detener turbo si se acabó el combustible
+                if (currentTurboFuel <= 0f)
                 {
+                    currentTurboFuel = 0f;
                     currentTurboFuel = 0f;
                     DeactivateTurbo();
                 }
@@ -222,10 +231,12 @@ public class TurboSystem : MonoBehaviour
             style.normal.textColor = Color.white;
 
             string statusText = $"Turbo: {currentState} ({currentTurboFuel:F1}/{maxTurboFuel:F1})";
+            string statusText = $"Turbo: {currentState} ({currentTurboFuel:F1}/{maxTurboFuel:F1})";
             
             if (currentState == TurboState.Active)
             {
                 style.normal.textColor = Color.green;
+                statusText += $"\nDuración: {(turboDuration - stateTimer):F1}s";
                 statusText += $"\nDuración: {(turboDuration - stateTimer):F1}s";
             }
             else if (currentState == TurboState.Cooldown)
