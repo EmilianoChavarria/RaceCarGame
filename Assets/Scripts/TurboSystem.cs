@@ -8,6 +8,7 @@ public class TurboSystem : MonoBehaviour
     
     [Tooltip("Fuerza de aceleración extra durante turbo")]
     public float turboAccelerationBoost = 20f;
+
     
     [Tooltip("Cantidad máxima de turbo disponible")]
     public float maxTurboFuel = 100f;
@@ -107,6 +108,8 @@ public class TurboSystem : MonoBehaviour
     {
         // El turbo se activa automáticamente al recoger pickups
         // No se puede activar manualmente
+        // El turbo se activa automáticamente al recoger pickups
+        // No se puede activar manualmente
     }
 
     void UpdateStateMachine()
@@ -128,7 +131,10 @@ public class TurboSystem : MonoBehaviour
                 
                 // Detener turbo si se acabó el combustible
                 if (currentTurboFuel <= 0f)
+                // Detener turbo si se acabó el combustible
+                if (currentTurboFuel <= 0f)
                 {
+                    currentTurboFuel = 0f;
                     currentTurboFuel = 0f;
                     DeactivateTurbo();
                 }
@@ -226,6 +232,7 @@ public class TurboSystem : MonoBehaviour
             if (currentState == TurboState.Active)
             {
                 style.normal.textColor = Color.green;
+                statusText += $"\nDuración: {(turboDuration - stateTimer):F1}s";
                 statusText += $"\nDuración: {(turboDuration - stateTimer):F1}s";
             }
             else if (currentState == TurboState.Cooldown)
