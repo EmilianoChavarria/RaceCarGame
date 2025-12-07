@@ -5,11 +5,10 @@ public class TurboSystem : MonoBehaviour
     [Header("Configuración de Turbo")]
     [Tooltip("Multiplicador de velocidad durante el turbo")]
     public float turboSpeedMultiplier = 2f;
-    public float turboSpeedMultiplier = 2f;
     
     [Tooltip("Fuerza de aceleración extra durante turbo")]
     public float turboAccelerationBoost = 20f;
-    public float turboAccelerationBoost = 20f;
+
     
     [Tooltip("Cantidad máxima de turbo disponible")]
     public float maxTurboFuel = 100f;
@@ -23,8 +22,6 @@ public class TurboSystem : MonoBehaviour
     [Tooltip("Tiempo de recarga del turbo en segundos")]
     public float turboCooldown = 5f;
     
-    [Tooltip("Duración del turbo en segundos")]
-    public float turboDuration = 8f;
     [Tooltip("Duración del turbo en segundos")]
     public float turboDuration = 8f;
 
@@ -230,7 +227,6 @@ public class TurboSystem : MonoBehaviour
             style.fontSize = 20;
             style.normal.textColor = Color.white;
 
-            string statusText = $"Turbo: {currentState} ({currentTurboFuel:F1}/{maxTurboFuel:F1})";
             string statusText = $"Turbo: {currentState} ({currentTurboFuel:F1}/{maxTurboFuel:F1})";
             
             if (currentState == TurboState.Active)
